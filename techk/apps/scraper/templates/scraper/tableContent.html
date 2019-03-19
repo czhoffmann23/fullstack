@@ -1,0 +1,125 @@
+
+<!-- Styles load path -->
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'scraper/style.css' %}"/>
+
+<!--DataTable-->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.0.3/css/buttons.dataTables.min.css">
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.0.3/js/dataTables.buttons.min.js"></script>
+<script src="//cdn.datatables.net/buttons/1.0.3/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.0.1/js/dataTables.select.min.js"></script>
+
+<script>
+    // Loader
+    window.addEventListener("load",function(){
+        var load_screen = document.getElementById("load_screen");
+        document.body.removeChild(load_screen);
+    });
+   // Tablejs
+   function applyDataTable(){
+        $('#example').DataTable( {
+                dom: 'Bfrtip',
+                buttons: [
+                    
+                ],
+                select: true
+            } );
+        }
+        $(document).ready(function() {
+        $('#trigger-update').click(function(){
+            $('#example').DataTable().destroy();
+            setTimeout(function(){
+                applyDataTable();
+            },2000);
+            
+        });
+        applyDataTable(); 
+    } );
+</script>
+
+
+<!--loader Screen -->
+<div id="load_screen">
+    <div id="loading">
+        <div class="lds-facebook">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+<!--SideBar -->
+<div class="sidebar">
+        {% for item in all_category%}
+            {% if item.name == text %}
+                <a class="active" href="{{item.name}}">{{item.name}}</a>
+            {%else %}
+                <a  href="{{item.name}}">{{item.name}}</a>
+            {%endif%}
+        {% endfor %}
+        
+</div>
+<!--Table Content -->
+<div class="content">
+    <div class="content-table">
+        <div class="title-category">
+            <h1>Category {{text}}</h1>
+        </div>
+        <br/>
+        <br/>
+        {% if messages %}
+            {% for message in messages %}
+            <div role= "alert"></div>
+            <div class="success">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    <strong>Success</strong> {{message}}
+            </div>
+            <br/>
+            {% endfor %}
+        
+            <br/>
+        {% endif %}
+        
+        <table class="table" id="example" >
+            <thead>
+                <tr>
+                    <th>Thumbnail</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Description</th>
+                    <th>Upc</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in all_books%}
+                <tr>
+                    <td><img src="{{book.thumbnail}}"></td>
+                    <td>{{book.category}}</td>
+                    <td>{{book.tittle}}</td>
+                    <td>{{book.price}}</td>
+                    <td>{{book.stock}}</td>
+                    <td style="font-size:10px;">{{book.product_description}}</td>
+                    <td>{{book.upc}}</td>
+                    <td>
+                        <a href="/category/{{book.category}}/{{book.id}}" style="margin-left: 16px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M3 6v18h18v-18h-18zm5 14c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm4-18v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.73 2 1.631 2h5.712z"/>
+                            </svg>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+

@@ -1,0 +1,32 @@
+<!-- Styles load path -->
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'scraper/style.css' %}"/>
+
+
+<!--SideBar -->
+<div class="sidebar">
+    {% for item in all_category%}
+        <a href="{{item.name}}">{{item.name}}</a>
+    {% endfor %}
+    
+</div>
+<!--Category Content -->
+<div class="content">
+        <div class="content-box">
+            <div class="title-category">
+                <h1>Hi, Welcome</h1>
+            </div>
+            <br/>
+            <div class="detail-content">
+                <br/>
+                <h3> That's all the category's that the found</h3>
+                <div class="parragraph-content">
+                    <p> <strong>Please</strong> choose one of the categories in the <strong>Left Side (Sidebar)</strong> </p>
+                    <p> that the scraper get, then you can see the information of the books. </p>
+                    <p> The data that is shows in a table content with filters, thumbnail, </p>
+                    <p> description and all the information of the books provided by</p>
+                    <p><a target="_blank" href="http://books.toscrape.com/index.html">books-toscrape.com</a></p>
+                </div>
+            </div>
+        </div>
+</div>
